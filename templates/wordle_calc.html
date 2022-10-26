@@ -5,13 +5,19 @@
 <br/>
 <br/>
 <form action="/" method ="POST">
-    <h3 align="center">Wordle Score Calculator</h3>
-    <div class="form-group">
-        <label for="stats"></label>
-        <input type="text"  autofocus class="form-control mx-auto w-auto" id="stats" name="stats" placeholder="Paste wordle stats here" autofocus=>
-        </div>
+    <h3 align="center">Game Score Calculator</h3>
     <br/>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center" align="center">
+    <div class="form-group">
+        <select class="form-control mx-auto w-25" id="game"  name="game" placeholder="Please select">
+            <option value="" selected disabled>Please select</option>
+            <option value="wordle">Wordle</option>
+            <option value="katapat">Katapat</option>
+        </select>
+        <label for="stats"></label>
+        <input type="text"  autofocus class="form-control mx-auto w-25" id="stats" name="stats" placeholder="Paste game stats here" autofocus=>
+    </div>
+    <br/>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center" align="center">
         <button type="submit" class="btn btn-success">Gimme my score!</button>
     </div>
     <br/>
