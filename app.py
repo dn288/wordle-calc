@@ -11,36 +11,67 @@ app.config.from_mapping(SECRET_KEY="afvabrtkdfporgjae12541")
 @app.route("/", methods=["GET", "POST"])
 def wordle_calc():
     if request.method == "POST":
+        if request.method == "POST":
+        game = request.form.get("game")
         stats = request.form.get("stats")
-        if not stats:
-            flash("ERROR - Please enter stats!", category="err")
-            return render_template("wordle_calc.html")
-        try:
-            x = re.search(r"^(STATISTICS\s([0-9][0-9]?[0-9]?)\sPlayed\s([0-9][0-9]?[0-9]?)\sWin\s%\s([0-9][0-9]?[0-9]?)\sCurrent\sStreak\s([0-9][0-9]?[0-9]?)\sMax\sStreak\sGUESS\sDISTRIBUTION\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?)\s)", stats)
-            if x:
-                total_games = int(x.group(2))
-                percentage = int(x.group(3))
-                cur_streak = int(x.group(4))
-                max_streak = int(x.group(5))
-                ones = int(x.group(6))
-                twos = int(x.group(7))
-                threes = int(x.group(8))
-                fours = int(x.group(9))
-                fives = int(x.group(10))
-                sixes = int(x.group(11))
+        if game == "wordle":
+            if not stats:
+                flash("ERROR - Please enter stats!", category="err")
+                return render_template("wordle_calc.html")
+            try:
+                x = re.search(r"^(STATISTICS\s([0-9][0-9]?[0-9]?)\sPlayed\s([0-9][0-9]?[0-9]?)\sWin\s%\s([0-9][0-9]?[0-9]?)\sCurrent\sStreak\s([0-9][0-9]?[0-9]?)\sMax\sStreak\sGUESS\sDISTRIBUTION\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?)\s)", stats)
+                if x:
+                    total_games = int(x.group(2))
+                    percentage = int(x.group(3))
+                    cur_streak = int(x.group(4))
+                    max_streak = int(x.group(5))
+                    ones = int(x.group(6))
+                    twos = int(x.group(7))
+                    threes = int(x.group(8))
+                    fours = int(x.group(9))
+                    fives = int(x.group(10))
+                    sixes = int(x.group(11))
 
-                score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_games)/(percentage/100)
-                flash("Success!", category="success")
-                return render_template("wordle_calc.html", score=f"Your Wordle score is {score:.3f}")
-            else:
+                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_games)/(percentage/100)
+                    flash("Success!", category="success")
+                    return render_template("wordle_calc.html", score=f"Your Wordle score is {score:.3f}")
+                else:
+                    flash("ERROR - Stats format not valid!", category="err")
+                    return render_template("wordle_calc.html")
+            except:
                 flash("ERROR - Stats format not valid!", category="err")
                 return render_template("wordle_calc.html")
-        except:
-            flash("ERROR - Stats format not valid!", category="err")
-            return render_template("wordle_calc.html")
+        elif game == "katapat":
+            stats = request.form.get("stats")
+            if not stats:
+                flash("ERROR - Please enter stats!", category="err")
+                return render_template("wordle_calc.html")
+            try:
+                x = re.search(r"^(STATISTIK\s([0-9][0-9]?[0-9]?)\sMain\s([0-9][0-9]?[0-9]?)\s%\sMenang\s([0-9][0-9]?[0-9]?)\sKombo\sSemasa\s([0-9][0-9]?[0-9]?)\sKombo\sMaksima\sTABURAN\sTEKAAN\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
+                if x:
+                    total_games = int(x.group(2))
+                    percentage = int(x.group(3))
+                    cur_streak = int(x.group(4))
+                    max_streak = int(x.group(5))
+                    ones = int(x.group(6))
+                    twos = int(x.group(7))
+                    threes = int(x.group(8))
+                    fours = int(x.group(9))
+                    fives = int(x.group(10))
+                    sixes = int(x.group(11))
 
+                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_games)/(percentage/100)
+                    flash("Success!", category="success")
+                    return render_template("wordle_calc.html", score=f"Your Katapat score is {score:.3f}")
+                else:
+                    flash("ERROR - Stats format not valid!", category="err")
+                    return render_template("wordle_calc.html")
+            except:
+                flash("ERROR - Stats format not valid!", category="err")
+                return render_template("wordle_calc.html")
     else:
         return render_template("wordle_calc.html")
+
 
 @app.route("/formula")
 def formula():
