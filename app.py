@@ -24,17 +24,15 @@ def wordle_calc():
                 x = re.search(r"^(STATISTICS\s([0-9][0-9]?[0-9]?)\sPlayed\s([0-9][0-9]?[0-9]?)\sWin\s%\s([0-9][0-9]?[0-9]?)\sCurrent\sStreak\s([0-9][0-9]?[0-9]?)\sMax\sStreak\sGUESS\sDISTRIBUTION\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?)\s)", stats)
                 if x:
                     total_games = int(x.group(2))
-                    percentage = int(x.group(3))
-                    cur_streak = int(x.group(4))
-                    max_streak = int(x.group(5))
                     ones = int(x.group(6))
                     twos = int(x.group(7))
                     threes = int(x.group(8))
                     fours = int(x.group(9))
                     fives = int(x.group(10))
                     sixes = int(x.group(11))
+                    total_solved = ones + twos + threes + fours + fives + sixes
 
-                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_games)/(percentage/100)
+                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_solved)/(total_solved/total_games)
                     flash("Success!", category="success")
                     return render_template("wordle_calc.html", score=f"Your Wordle score is {score:.3f}")
                 else:
@@ -52,17 +50,15 @@ def wordle_calc():
                 x = re.search(r"^(STATISTIK\s\s([0-9][0-9]?[0-9]?)\sMain\s([0-9][0-9]?[0-9]?)\s%\sMenang\s([0-9][0-9]?[0-9]?)\sKombo\sSemasa\s([0-9][0-9]?[0-9]?)\sKombo\sMaksima\sTABURAN\sTEKAAN\s\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
                 if x:
                     total_games = int(x.group(2))
-                    percentage = int(x.group(3))
-                    cur_streak = int(x.group(4))
-                    max_streak = int(x.group(5))
                     ones = int(x.group(6))
                     twos = int(x.group(7))
                     threes = int(x.group(8))
                     fours = int(x.group(9))
                     fives = int(x.group(10))
                     sixes = int(x.group(11))
+                    total_solved = ones + twos + threes + fours + fives + sixes
 
-                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_games)/(percentage/100)
+                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_solved)/(total_solved/total_games)
                     flash("Success!", category="success")
                     return render_template("wordle_calc.html", score=f"Your Katapat score is {score:.3f}")
                 else:
