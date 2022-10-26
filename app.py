@@ -11,7 +11,6 @@ app.config.from_mapping(SECRET_KEY="afvabrtkdfporgjae12541")
 @app.route("/", methods=["GET", "POST"])
 def wordle_calc():
     if request.method == "POST":
-        if request.method == "POST":
         game = request.form.get("game")
         stats = request.form.get("stats")
         if game == "wordle":
