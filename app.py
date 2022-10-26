@@ -13,6 +13,9 @@ def wordle_calc():
     if request.method == "POST":
         game = request.form.get("game")
         stats = request.form.get("stats")
+        if not game:
+            flash("ERROR - Please select game!", category="err")
+            return render_template("wordle_calc.html")
         if game == "wordle":
             if not stats:
                 flash("ERROR - Please enter stats!", category="err")
