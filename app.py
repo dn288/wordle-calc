@@ -70,6 +70,7 @@ def wordle_calc():
     else:
         return render_template("wordle_calc.html")
 
+
 @app.route("/formula")
 def formula():
     return render_template("formula.html")
