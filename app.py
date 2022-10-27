@@ -34,7 +34,7 @@ def wordle_calc():
 
                     score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_solved)/(total_solved/total_games)
                     flash("Success!", category="success")
-                    return render_template("wordle_calc.html", score=f"🥇 Your Wordle score is {score:.3f} 🥇")
+                    return render_template("wordle_calc.html", score=f"Your Wordle score is {score:.3f} 🥇")
                 else:
                     flash("ERROR - Stats format not valid!", category="err")
                     return render_template("wordle_calc.html")
@@ -60,7 +60,7 @@ def wordle_calc():
 
                     score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_solved)/(total_solved/total_games)
                     flash("Success!", category="success")
-                    return render_template("wordle_calc.html", score=f"🥇 Your Katapat score is {score:.3f} 🥇")
+                    return render_template("wordle_calc.html", score=f"Your Katapat score is {score:.3f} 🥇")
                 else:
                     flash("ERROR - Stats format not valid!", category="err")
                     return render_template("wordle_calc.html")
