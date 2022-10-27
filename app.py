@@ -47,7 +47,7 @@ def wordle_calc():
                 flash("ERROR - Please enter stats!", category="err")
                 return render_template("wordle_calc.html")
             try:
-                x = re.search(r"^(STATISTIK\s\s([0-9][0-9]?[0-9]?)\sMain\s([0-9][0-9]?[0-9]?)\s%\sMenang\s([0-9][0-9]?[0-9]?)\sKombo\sSemasa\s([0-9][0-9]?[0-9]?)\sKombo\sMaksima\sTABURAN\sTEKAAN\s\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
+                x = re.search(r"^(STATISTIK\s\s?([0-9][0-9]?[0-9]?)\sMain\s([0-9][0-9]?[0-9]?)\s%\sMenang\s([0-9][0-9]?[0-9]?)\sKombo\sSemasa\s([0-9][0-9]?[0-9]?)\sKombo\sMaksima\sTABURAN\sTEKAAN\s\s?1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
                 if x:
                     total_games = int(x.group(2))
                     ones = int(x.group(6))
