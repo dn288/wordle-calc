@@ -21,7 +21,7 @@ def wordle_calc():
                 flash("ERROR - Please choose enter stats!", category="err")
                 return render_template("wordle_calc.html")
             try:
-                x = re.search(r"^(STATISTICS\s([0-9][0-9]?[0-9]?)\sPlayed\s([0-9][0-9]?[0-9]?)\sWin\s%\s([0-9][0-9]?[0-9]?)\sCurrent\sStreak\s([0-9][0-9]?[0-9]?)\sMax\sStreak\sGUESS\sDISTRIBUTION\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?)\s)", stats)
+                x = re.search(r"^(STATISTICS\s([0-9][0-9]?[0-9]?)\sPlayed\s([0-9][0-9]?[0-9]?)\sWin\s%\s([0-9][0-9]?[0-9]?)\sCurrent\sStreak\s([0-9][0-9]?[0-9]?)\sMax\sStreak\sGUESS\sDISTRIBUTION\s1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
                 if x:
                     total_played = int(x.group(2))
                     ones = int(x.group(6))
@@ -36,7 +36,7 @@ def wordle_calc():
                     flash("Success!", category="success")
                     return render_template("wordle_calc.html", score=f"Your Wordle score is {score:.3f} 🥇")
                 else:
-                    flash("ERROR - Stats format not valid!", category="err")
+                    flash("ERROR - Stats format not valid! Please start copying from 'Statistics...'", category="err")
                     return render_template("wordle_calc.html")
             except:
                 flash("ERROR - Stats format not valid! Please check instructions.", category="err")
