@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %} Wordle Score Calculator {% endblock %}
+{% block content %}
+<br>
+<div class="align-items-center">
+<h3 align="center">🟩🟩🟩🟩🟩</h3>
+<h4 align="center">{{ game }} SCORE</h4>
+<h4 align="center">Played : {{ total_played }}</h4>
+<h3 align="center">🟩🟩🟩🟩🟩</h3>
+</div>
+    <div class="chartBox">
+    <body>
+        <div style="position: relative; width=650; height=850">
+        <canvas id="myChart"></canvas>
+        <div class="label-text">
+            {{ s }}
+        </div>
+    </div>
+    </div>
+        </body>
+        <script>
+        Chart.register(ChartDataLabels);
+
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ labels | safe }},
+                datasets: [{
+                    label: 'Guesses',
+                    data: {{ values | safe}},
+                    backgroundColor: [
+                        'rgba(75, 0, 139)',
+                        'rgba(203, 195, 227)',
+                        'rgba(0, 255, 154)',
+                        'rgba(255, 215, 0)',
+                        'rgba(0, 255, 255)',
+                        'rgba(255, 127, 80)',
+                        'transparent'
+                        ],
+                    hoverOffset: 4,
+                    bindto: "#chartBox",         
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'GUESS DISTRIBUTION %',
+                        padding: {
+                            top: 20,
+                            bottom: 10,
+                        }
+                    },
+                    datalabels: {
+                        display: true,
+                        formatter: (value) => {
+                            if (value < 3) return '';
+                            return Math.round(value) + '%';
+                            }
+                        },
+                }
+            }
+        });
+        </script>
+
+        <p align="center">wordle-score-calc.herokuapp.com</p>
+    </body>
+    </div>
+
+
+<div class="footer-basic" align="center">
+    <footer class="fixed-bottom">
+        <div class="social">
+            <a href="#"><i class="icon ion-social-instagram"></i></a>
+            <a href="#"><i class="icon ion-social-snapchat"></i></a>
+            <a href="#"><i class="icon ion-social-twitter"></i></a>
+            <a href="#"><i class="icon ion-social-facebook"></i></a>
+        </div>
+    </footer>
+</div>    
+
+{% endblock %}
