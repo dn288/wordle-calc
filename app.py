@@ -23,10 +23,9 @@ def wordle_calc():
             try:
                 z = extract(stats)
                 s = fscore(score(z))
-                data = z[2:]
-                labels = [row[0] for row in data]
-                values = [row[1]*100/z[0][1] for row in data]
                 total_played = z[0][1]  
+                labels = [row[0] for row in z[2:]]
+                values = [row[1]*100/z[0][1] for row in z[2:]]
                 
                 flash("SUCCESS!")
                 return render_template("results.html", game="WORDLE", labels=labels, values=values, s=s, total_played=total_played)
@@ -41,10 +40,9 @@ def wordle_calc():
             try:
                 z = extract(stats)
                 s = fscore(score(z))
-                data = z[2:]
-                labels = [row[0] for row in data]
-                values = [row[1]*100/z[0][1] for row in data]
                 total_played = z[0][1]  
+                labels = [row[0] for row in z[2:]]
+                values = [row[1]*100/z[0][1] for row in z[2:]]
                 flash("SUCCESS!")
                 return render_template("results.html", game="KATAPAT", labels=labels, values=values, s=s, total_played=total_played)
                 
