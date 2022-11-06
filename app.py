@@ -21,23 +21,15 @@ def wordle_calc():
                 flash("ERROR - Please choose enter stats!", category="err")
                 return render_template("wordle_calc.html")
             try:
-                x = re.search(r"^(STATISTICS\s\s?([0-9][0-9]?[0-9]?)\sPlayed\s([0-9][0-9]?[0-9]?)\sWin\s%\s([0-9][0-9]?[0-9]?)\sCurrent\sStreak\s([0-9][0-9]?[0-9]?)\sMax\sStreak\sGUESS\sDISTRIBUTION\s\s?1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
-                if x:
-                    total_played = int(x.group(2))
-                    ones = int(x.group(6))
-                    twos = int(x.group(7))
-                    threes = int(x.group(8))
-                    fours = int(x.group(9))
-                    fives = int(x.group(10))
-                    sixes = int(x.group(11))
-                    total_solved = ones + twos + threes + fours + fives +sixes
-
-                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_solved)/(total_solved/total_played)
-                    flash("Success!", category="success")
-                    return render_template("wordle_calc.html", score=f"Your Wordle score is {score:.3f} 🥇")
-                else:
-                    flash("ERROR - Stats format not valid! Please start copying from 'Statistics...'", category="err")
-                    return render_template("wordle_calc.html")
+                z = extract(stats)
+                s = fscore(score(z))
+                data = z[2:]
+                labels = [row[0] for row in data]
+                values = [row[1]*100/z[0][1] for row in data]
+                total_played = z[0][1]  
+                
+                flash("SUCCESS!")
+                return render_template("results.html", game="WORDLE", labels=labels, values=values, s=s, total_played=total_played)
             except:
                 flash("ERROR - Stats format not valid! Please check instructions.", category="err")
                 return render_template("wordle_calc.html")
@@ -47,29 +39,20 @@ def wordle_calc():
                 flash("ERROR - Please enter stats!", category="err")
                 return render_template("wordle_calc.html")
             try:
-                x = re.search(r"^(STATISTIK\s\s?([0-9][0-9]?[0-9]?)\sMain\s([0-9][0-9]?[0-9]?)\s%\sMenang\s([0-9][0-9]?[0-9]?)\sKombo\sSemasa\s([0-9][0-9]?[0-9]?)\sKombo\sMaksima\sTABURAN\sTEKAAN\s\s?1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", stats)
-                if x:
-                    total_games = int(x.group(2))
-                    ones = int(x.group(6))
-                    twos = int(x.group(7))
-                    threes = int(x.group(8))
-                    fours = int(x.group(9))
-                    fives = int(x.group(10))
-                    sixes = int(x.group(11))
-                    total_solved = ones + twos + threes + fours + fives + sixes
-
-                    score = ((ones*1 + twos*2 + threes*3 + fours*4 + fives*5 + sixes*6)/total_solved)/(total_solved/total_games)
-                    flash("Success!", category="success")
-                    return render_template("wordle_calc.html", score=f"Your Katapat score is {score:.3f} 🥇")
-                else:
-                    flash("ERROR - Stats format not valid!", category="err")
-                    return render_template("wordle_calc.html")
+                z = extract(stats)
+                s = fscore(score(z))
+                data = z[2:]
+                labels = [row[0] for row in data]
+                values = [row[1]*100/z[0][1] for row in data]
+                total_played = z[0][1]  
+                flash("SUCCESS!")
+                return render_template("results.html", game="KATAPAT", labels=labels, values=values, s=s, total_played=total_played)
+                
             except:
                 flash("ERROR - Stats format not valid! Please check instructions.", category="err")
                 return render_template("wordle_calc.html")
     else:
         return render_template("wordle_calc.html")
-
 
 @app.route("/formula")
 def formula():
@@ -82,6 +65,49 @@ def instructions():
 @app.route("/links")
 def links():
     return render_template("links.html")
+
+
+def fscore(x):
+    """format score to 3 decimals"""
+    return "%.3f" % x
+
+
+def extract(x):
+    """extract data from info pasted"""
+    y = re.search(r"^([A-Z]+\s\s?([0-9][0-9]?[0-9]?)\s[a-zA-Z]+\s([0-9][0-9]?[0-9]?)\s%?\s?[a-zA-Z]+\s\%?\s?([0-9][0-9]?[0-9]?)\s[a-zA-Z]+\s[a-zA-Z]+\s([0-9][0-9]?[0-9]?)\s[a-zA-Z]+\s[a-zA-Z]+\s[A-Z]+\s[A-Z]+\s\s?1\s([0-9][0-9]?)\s2\s([0-9][0-9]?[0-9]?)\s3\s([0-9][0-9]?[0-9]?)\s4\s([0-9][0-9]?[0-9]?)\s5\s([0-9][0-9]?[0-9]?)\s6\s([0-9][0-9]?[0-9]?))", x)
+    if y:
+        totl = int(y.group(2))
+        ones = int(y.group(6))
+        twos = int(y.group(7))
+        threes = int(y.group(8))
+        fours = int(y.group(9))
+        fives = int(y.group(10))
+        sixes =  int(y.group(11))
+        total_solved = ones + twos + threes + fours + fives + sixes
+
+        z = [
+                ("total", totl),
+                ("total_solved", total_solved),
+                ("1/6", ones),
+                ("2/6", twos),
+                ("3/6", threes),
+                ("4/6", fours),
+                ("5/6", fives),
+                ("6/6", sixes),
+                ("X/6", totl - total_solved),
+            ]
+        return z
+    else:
+        raise exception
+
+
+def score(z):
+    a = z[2][1]*1 + z[3][1]*2 + z[4][1]*3 + z[5][1]*4 + z[6][1]*5 + z[7][1]*6
+    b = z[0][1] - z[8][1]
+    c = z[1][1] / z[0][1]
+    d = (a/b)/c
+    return d
+
 
 if __name__=="__main__":
     app.debug = True
