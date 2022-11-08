@@ -16,39 +16,22 @@ def wordle_calc():
         if not game:
             flash("ERROR - Please select game!", category="err")
             return render_template("wordle_calc.html")
-        if game == "wordle":
-            if not stats:
-                flash("ERROR - Please choose enter stats!", category="err")
-                return render_template("wordle_calc.html")
-            try:
-                z = extract(stats)
-                s = fscore(score(z))
-                total_played = z[0][1]  
-                labels = [row[0] for row in z[2:]]
-                values = [row[1]*100/z[0][1] for row in z[2:]]
-                
-                flash("SUCCESS!")
-                return render_template("results.html", game="WORDLE", labels=labels, values=values, s=s, total_played=total_played)
-            except:
-                flash("ERROR - Stats format not valid! Please check instructions.", category="err")
-                return render_template("wordle_calc.html")
-        elif game == "katapat":
-            stats = request.form.get("stats")
-            if not stats:
-                flash("ERROR - Please enter stats!", category="err")
-                return render_template("wordle_calc.html")
-            try:
-                z = extract(stats)
-                s = fscore(score(z))
-                total_played = z[0][1]  
-                labels = [row[0] for row in z[2:]]
-                values = [row[1]*100/z[0][1] for row in z[2:]]
-                flash("SUCCESS!")
-                return render_template("results.html", game="KATAPAT", labels=labels, values=values, s=s, total_played=total_played)
-                
-            except:
-                flash("ERROR - Stats format not valid! Please check instructions.", category="err")
-                return render_template("wordle_calc.html")
+        if not stats:
+            flash("ERROR - Please choose enter stats!", category="err")
+            return render_template("wordle_calc.html")
+
+        try:
+            z = extract(stats)
+            s = fscore(score(z))
+            total_played = z[0][1]  
+            labels = [row[0] for row in z[2:]]
+            values = [row[1]*100/z[0][1] for row in z[2:]]
+            
+            flash("SUCCESS!")
+            return render_template("results.html", game=game, labels=labels, values=values, s=s, total_played=total_played)
+        except:
+            flash("ERROR - Stats format not valid! Please check instructions.", category="err")
+            return render_template("wordle_calc.html")
     else:
         return render_template("wordle_calc.html")
 
