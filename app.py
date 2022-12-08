@@ -11,17 +11,14 @@ app.config.from_mapping(SECRET_KEY="afvabrtkdfporgjae12541")
 @app.route("/", methods=["GET", "POST"])
 def wordle_calc():
     if request.method == "POST":
-        game = request.form.get("game")
         stats = request.form.get("stats")
-        if not game:
-            flash("ERROR - Please select game!", category="err")
-            return render_template("wordle_calc.html")
         if not stats:
             flash("ERROR - Please choose enter stats!", category="err")
             return render_template("wordle_calc.html")
 
         try:
             z = extract(stats)
+            game = name(stats)
             s = fscore(score(z))
             total_played = z[0][1]  
             labels = [row[0] for row in z[2:]]
@@ -88,6 +85,19 @@ def score(z):
     c = z[1][1] / z[0][1]
     d = (a/b)/c
     return d
+
+def name(x):
+    games_dict = {
+        "STATISTICS": "Wordle",
+        "STATISTIK": "Katapat",
+    }
+
+    y = re.search(r"^([A-Z]+)", x)
+    if y:
+        for key, value in games_dict.items():
+            if y.group(1) == key:
+                return value
+
 
 
 if __name__=="__main__":
