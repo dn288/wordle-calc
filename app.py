@@ -88,8 +88,8 @@ def score(z):
 
 def name(x):
     games_dict = {
-        "STATISTICS": "Wordle",
-        "STATISTIK": "Katapat",
+        "STATISTICS": "WORDLE",
+        "STATISTIK": "KATAPAT",
     }
 
     y = re.search(r"^([A-Z]+)", x)
